@@ -1,2 +1,2 @@
 # volume-tracker
-Kripto paralarda kategori bazlı hacim üzerinde veri analizi yapabileceğimiz web sayfası 
+A web page for data analysis based on category-specific volume in cryptocurrencies.
