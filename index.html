@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meme Tokens Overview</title>
+  <link rel="stylesheet" href="styles.css"> 
+</head> 
+<body>
+  <div class="container"> 
+    <h1>High Volume Tokens Overview</h1>
+    <div class="filter-container">
+      <label for="categorySelect">Select Category:</label>
+      <select id="categorySelect">
+        <option value="meme-token">All Meme Tokens</option>
+        <option value="solana-meme-coins">Solana Meme Coins</option>
+        <option value="dog-themed-coins">Dog Themed Coins</option>
+        <option value="cat-themed-coins">Cat Themed Coins</option>
+        <option value="layer-1">Layer 1</option>
+        <option value="proof-of-work-pow">Proof of Work (PoW)</option>
+        <option value="smart-contract-platform">Smart Contract Platform</option>
+        <option value="proof-of-stake-pos">Proof of Stake (PoS)</option>
+        <option value="centralized-exchange-token-cex">CEX Tokens</option>
+        <option value="dwf-labs-portfolio">DWF Labs Portfolio</option>
+        <option value="non-fungible-tokens-nft">NFT</option>
+        <option value="depin">DePIN</option>
+        <option value="layer-2">Layer 2</option>
+        <option value="gaming">Gaming</option>
+        <option value="restaking">Restaking</option>
+        <option value="play-to-earn">Play to Earn</option>
+        <option value="metaverse">Metaverse</option>
+        <option value="real-world-assets-rwa">RWA</option>
+        <option value="privacy-coins">Privacy Coins</option>
+        <option value="socialfi">SocialFi</option>
+        <option value="brc-20">BRC-20</option>
+        <option value="wallets">Wallets</option>
+        <option value="launchpad">Launchpad</option>
+        <option value="nft-marketplace">NFT Marketplace</option>
+        <option value="telegram_apps">Telegram Apps</option>
+        <option value="tap-to-earn">Tap to Earn</option>
+        <option value="layer-3-l3">Layer 3 (L3)</option>
+        <option value="src-20">SRC-20</option>
+        <option value="avalanche-ecosystem">Avalanche Ecosystem</option>
+        <option value="arbitrum-ecosystem">Arbitrum Ecosystem</option>
+        <option value="ethereum-ecosystem">Ethereum Ecosystem</option>
+        <option value="base-ecosystem">Base Ecosystem</option>
+        <option value="solana-ecosystem">Solana Ecosystem</option>
+        <option value="binance-smart-chain">Binance Smart Chain</option>
+        <option value="linea-ecosystem">Linea Ecosystem</option>
+        <option value="sui-ecosystem">Sui Ecosystem</option>
+        <option value="sei-ecosystem">Sei Ecosystem</option>
+      </select>
+ 
+      <div class="volume-filter"> 
+        <label for="minVolume">Min Volume:</label>
+        <input type="number" id="minVolume" placeholder="Enter minimum volume" />
+
+        <label for="maxVolume">Max Volume:</label>
+        <input type="number" id="maxVolume" placeholder="Enter maximum volume" />
+
+        <button id="filterButton">Filter</button>
+      </div>
+
+      <div class="search-bar">
+        <input type="text" id="searchBar" placeholder="Search by coin name..." />
+      </div>
+    </div>
+
+    <div id="loadingContainer">
+      <p>Loading...</p>
+    </div>
+
+    <table id="categoryTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Logo</th>
+          <th>Coin</th>
+          <th class="sortable" data-sort="current_price">Price (USD) ⬍</th>
+          <th class="sortable" data-sort="24h">Change (24H) ⬍</th>
+          <th class="sortable" data-sort="7d">Change (7D) ⬍</th>
+          <th class="sortable" data-sort="30d">Change (30D) ⬍</th>
+          <th class="sortable" data-sort="total_volume">24H Volume ⬍</th>
+          <th class="sortable" data-sort="market_cap">Market Cap ⬍</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
+
+<style>
+  
+  body {
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa;
+  font-family: 'Roboto', sans-serif;
+  color: #212121;
+}
+
+.container {
+  max-width: 100%;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.filter-container {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+select {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: collapse;
+}
+
+thead th {
+  background-color: #4285F4;
+  color: white;
+  padding: 12px;
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #f1f3f4;
+}
+
+tbody td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+  white-space: nowrap;
+}
+
+.green {
+  color: #4caf50;
+}
+
+.red {
+  color: #f44336;
+}
+
+img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+#loadingContainer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.sortable:hover {
+  background-color: #0e50c4;
+  transition: background-color 0.3s;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  table {
+    min-width: 600px;
+  }
+
+  thead th,
+  tbody td {
+    padding: 8px;
+  }
+
+  h1 {
+    font-size: 1.2rem;
+  }
+}
+
+
+.volume-filter {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+input[type="number"] {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 150px;
+}
+
+button {
+  padding: 8px 12px;
+  background-color: #4285F4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0e50c4;
+}
+.search-bar {
+  margin-top: 10px;
+  text-align: center;
+}
+
+#searchBar {
+  padding: 8px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+</style>
+
+ <script>
+   
+   const apiUrl = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd";
+const categorySelect = document.getElementById("categorySelect");
+const minVolumeInput = document.getElementById("minVolume");
+const maxVolumeInput = document.getElementById("maxVolume");
+const filterButton = document.getElementById("filterButton");
+const searchBar = document.getElementById("searchBar");
+
+let currentTokens = []; // Store tokens globally for reuse
+
+// Fetch tokens based on the selected category
+async function fetchTokens(category = "meme-token") {
+  try {
+    document.getElementById("loadingContainer").style.display = "block";
+    const response = await fetch(
+      `${apiUrl}&category=${category}&order=market_cap_desc&per_page=900&page=1&sparkline=false&price_change_percentage=24h,7d,30d,1y`
+    );
+    if (!response.ok) throw new Error("Failed to fetch tokens");
+
+    currentTokens = await response.json();
+    displayTokens(currentTokens);
+    document.getElementById("loadingContainer").style.display = "none";
+  } catch (error) {
+    console.error("Error fetching tokens:", error);
+    document.getElementById("loadingContainer").innerHTML =
+      "<p>Error occurred while fetching data.</p>";
+  }
+}
+
+// Display tokens in the table
+function displayTokens(tokens) {
+  const tableBody = document.querySelector("#categoryTable tbody");
+  const fragment = document.createDocumentFragment();
+
+  tokens.forEach((token, index) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${index + 1}</td>
+      <td><img src="${token.image}" alt="${token.name} Logo"></td>
+      <td>${token.name} (${token.symbol.toUpperCase()})</td>
+      <td>${formatCurrency(token.current_price)}</td>
+      <td class="${getChangeColor(token.price_change_percentage_24h)}">
+        ${formatPercentage(token.price_change_percentage_24h)}
+      </td>
+      <td class="${getChangeColor(token.price_change_percentage_7d_in_currency)}">
+        ${formatPercentage(token.price_change_percentage_7d_in_currency)}
+      </td>
+      <td class="${getChangeColor(token.price_change_percentage_30d_in_currency)}">
+        ${formatPercentage(token.price_change_percentage_30d_in_currency)}
+      </td>
+      <td>${formatCurrency(token.total_volume)}</td>
+      <td>${formatCurrency(token.market_cap)}</td>
+    `;
+    fragment.appendChild(row);
+  });
+
+  tableBody.innerHTML = "";
+  tableBody.appendChild(fragment);
+}
+
+// Format currency
+function formatCurrency(value) {
+  return value
+    ? value.toLocaleString("en-US", { style: "currency", currency: "USD" })
+    : "N/A";
+}
+
+// Format percentage
+function formatPercentage(value) {
+  return value ? `${value.toFixed(2)}%` : "N/A";
+}
+
+// Get color for change values
+function getChangeColor(value) {
+  if (!value) return "";
+  return value > 0 ? "green" : "red";
+}
+
+// Filter tokens based on volume
+function filterTokens() {
+  const minVolume = parseFloat(minVolumeInput.value) || 0;
+  const maxVolume = parseFloat(maxVolumeInput.value) || Infinity;
+
+  const filteredTokens = currentTokens.filter(
+    (token) => token.total_volume >= minVolume && token.total_volume <= maxVolume
+  );
+
+  displayTokens(filteredTokens);
+}
+
+// Search tokens by name
+function searchTokens() {
+  const searchText = searchBar.value.toLowerCase();
+  const filteredTokens = currentTokens.filter((token) =>
+    token.name.toLowerCase().includes(searchText)
+  );
+  displayTokens(filteredTokens);
+}
+
+// Sort tokens based on the clicked column
+document.querySelectorAll(".sortable").forEach((header) => {
+  let isAscending = true;
+
+  header.addEventListener("click", () => {
+    const sortKey = header.dataset.sort;
+
+    const sortedTokens = [...currentTokens].sort((a, b) => {
+      const aValue = getValueForSorting(a, sortKey);
+      const bValue = getValueForSorting(b, sortKey);
+
+      if (isNaN(aValue) || isNaN(bValue)) {
+        return isAscending
+          ? aValue.localeCompare(bValue)
+          : bValue.localeCompare(aValue);
+      }
+      return isAscending ? aValue - bValue : bValue - aValue;
+    });
+
+    displayTokens(sortedTokens);
+    isAscending = !isAscending; // Toggle sorting order
+  });
+});
+
+// Get the correct value for sorting
+function getValueForSorting(token, key) {
+  switch (key) {
+    case "current_price":
+      return token.current_price || 0;
+    case "24h":
+      return token.price_change_percentage_24h || 0;
+    case "7d":
+      return token.price_change_percentage_7d_in_currency || 0;
+    case "30d":
+      return token.price_change_percentage_30d_in_currency || 0;
+    case "total_volume":
+      return token.total_volume || 0;
+    case "market_cap":
+      return token.market_cap || 0;
+    default:
+      return "";
+  }
+}
+
+// Event listeners
+categorySelect.addEventListener("change", () => fetchTokens(categorySelect.value));
+filterButton.addEventListener("click", filterTokens);
+searchBar.addEventListener("input", searchTokens);
+
+// Fetch initial data on page load
+document.addEventListener("DOMContentLoaded", () => fetchTokens());
+
+   </script>
